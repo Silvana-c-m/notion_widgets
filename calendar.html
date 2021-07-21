@@ -1,333 +1,345 @@
-<!DOCTYPE html>
-<!-- original:https://codepen.io/boudra/pen/raErwP -->
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar</title>
+<! DOCTYPE html >
+<! - original: https: //codepen.io/boudra/pen/raErwP ->
+< html  lang = " en " >
+< cabeza >
+    < meta  charset = " UTF-8 " >
+    < meta  name = " viewport " content = " width = device-width, initial-scale = 1.0 " >
+    < título > Calendario </ título >
 
-    <style>
-        body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fff;
+    < estilo >
+        cuerpo {
+    familia de fuentes :  'Arial' , sans-serif;
+    color de fondo :  # fff ;
 }
 
-.wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  flex-direction: column;
-  min-height: 100%;
+. envoltorio {
+    pantalla : flex;
+    alinear-elementos : centro;
+    justificar-contenido : centro;
+  flex-direction : columna;
+  altura mínima :  100 % ;
 }
 
-button::-moz-focus-inner { 
-  border: 0;
-  padding: 0;
+botón :: -moz-focus-inner {
+  borde :  0 ;
+  acolchado :  0 ;
 }
 
-#calendari {
-    margin:  0 auto;
-    /* height: 330px; */
-    /* width: 350px; */
-    font-size: 14px;
-    /* box-shadow: 0px 1px 4px rgba(0,0,0,0.4); */
+# calendari {
+    margen :   0 automático;
+    / * altura: 330px; * /
+    / * ancho: 350px; * /
+    tamaño de fuente :  14 px ;
+    / * caja-sombra: 0px 1px 4px rgba (0,0,0,0.4); * /
 }
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
-    background-color: #fff;
-    position: absolute;
+mesa {
+    colapso de la frontera : colapso;
+    diseño de mesa : fijo;
+    caja-sombra :  0 px  1 px  3 px  rgba ( 0 , 0 , 0 , 0.2 );
+    color de fondo :  # fff ;
+    posición : absoluta;
 
 
 }
 
 
-td,th {
-    text-align: center;
-    background-color: #fff;
+td , th {
+    alineación de texto : centro;
+    color de fondo :  # fff ;
 }
 th {
-    padding: 10px;
+    relleno :  10 px ;
 }
-tr:first-child th {
-    font-size: 20px;
-    font-weight: bold;
-    border-left: none;
-    border-top: none;
+tr : primer hijo  th {
+    tamaño de fuente :  20 px ;
+    font-weight : negrita;
+    borde izquierdo : ninguno;
+    border-top : ninguno;
 }
-td:last-child, th:last-child {
-  border-right: none;
+td : último hijo ,  th : último hijo {
+  border-right : ninguno;
 }
 
 th {
-    border-top: 1px solid rgba(0,0,0,0.1);
-    border-right: 1px solid rgba(0,0,0,0.1);
-    background-color: #9b59b6;
-    color: #fff;
-    text-shadow: 0px -1px 0px rgba(0,0,0,0.2);
-    font-weight: normal;
+    borde superior :  rgba sólido de 1 px ( 0 , 0 , 0 , 0.1 );
+    borde derecho :  rgba sólido de 1 px ( 0 , 0 , 0 , 0.1 );
+    color de fondo :  # D18063 ;
+    color :  # fff ;
+    sombra de texto :  0 px  -1 px  0 px  rgba ( 0 , 0 , 0 , 0.2 );
+    font-weight : normal;
 }
-th .any {
-    font-size: 12px;
-    font-weight: normal;
-    display: block;
-    text-shadow: none;
-    color: rgba(0,0,0,0.4);
+th . cualquier {
+    tamaño de fuente :  12 px ;
+    font-weight : normal;
+    pantalla : bloque;
+    sombra de texto : ninguna;
+    color :  rgba ( 0 , 0 , 0 , 0.4 );
 }
-tr:nth-child(2) th {
-    padding: 5px;
+tr : nth-child ( 2 ) th {
+    relleno :  5 px ;
 }
 td {
-    padding: 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    acolchado :  0 ;
+    borde inferior :  rgba sólido de 1 px ( 0 , 0 , 0 , 0.05 );
 }
-td>span {
-    color: #555;
-    padding: 10px;
-    display: block;
-    border: 2px solid transparent;
-    transition: border 0.3s ease;
-}
-
-td:nth-child(even)>span {
-    background-color: rgba(0,0,0,0.02);
-}
-td:last-child>span,
-td:nth-child(6)>span {
-    color: #9b59b6;
-}
-td.avui>span {
-    font-weight: bold;
-    background-color: #9b59b6;
-    color: #fff;
-    border: 2px solid rgba(0,0,0,0.1);
-}
-td.fora > span {
-    opacity: 0.2;
-}
-td > span:hover {
-    background: #a57cb6;
-    color: #fff;
-}
-.boto-next, .boto-prev {
-    background: rgba(0,0,0,0.1);
-    color: #fff;
-    font-family: inherit;
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: inherit;
-    padding: 2px 10px 5px 10px;
-    line-height: 1px;
-    height: 30px;
-    width: 30px;
-    vertical-align: middle;
-    border-radius: 100%;
-    position: absolute;
-    top: 15px;
-}
-.boto-next { right: 10px; padding-left: 13px; }
-.boto-prev { left: 10px; padding-right: 13px;}
-.boto-next:hover,
-.boto-prev:hover {
-    background: rgba(0,0,0,0.2);
-}
-button:hover { cursor: pointer; }
-button:focus { outline: none; }
-
-footer {
-  text-align: center;
-  color: #ddd;
-  font-weight: normal;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
-  font-size: 0.8em;
-  padding: 20px;
+td > span {
+    color :  # 555 ;
+    relleno :  10 px ;
+    pantalla : bloque;
+    borde :  2 px sólido transparente;
+    transición : borde 0,3 s facilidad;
 }
 
-footer a,
-footer a:link {
-  color: #fff;
-  text-decoration: none;
+td : n-ésimo hijo ( par ) > intervalo {
+    color de fondo :  rgba ( 0 , 0 , 0 , 0.02 );
 }
-    </style>
-</head>
-<body>
-    <div class="">
-        <div id="calendari"></div>
-      </div>
-      <script>
-        var mesos = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
+td : último hijo > intervalo ,
+td : nth-child ( 6 ) > span {
+    color :  # D18063 ;
+}
+td . avui > span {
+    font-weight : negrita;
+    color de fondo :  # DBA37D ;
+    color :  # fff ;
+    borde :  rgba sólido de 2 px ( 0 , 0 , 0 , 0.1 );
+}
+td . foros  >  intervalo {
+    opacidad :  0,2 ;
+}
+td  >  span : hover {
+    fondo :  # E3BB9D ;
+    color :  # fff ;
+}
+. boto-lado , . boto-prev {
+    fondo :  rgba ( 0 , 0 , 0 , 0.1 );
+    color :  # fff ;
+    familia de fuentes : heredar;
+    borde : ninguno;
+    tamaño de fuente :  18 px ;
+    font-weight : negrita;
+    text-shadow : heredar;
+    relleno :  2 px  10 px  5 px  10 px ;
+    altura de línea :  1 px ;
+    altura :  30 px ;
+    ancho :  30 px ;
+    alineación vertical : medio;
+    radio de borde :  100 % ;
+    posición : absoluta;
+    superior :  15 px ;
+}
+. boto-next { derecha :  10 px ; padding-left :  13 px ; }
+. boto-prev { izquierda :  10 px ; padding-right :  13 px ;}
+. boto-next : hover ,
+. boto-prev : hover {
+    fondo :  rgba ( 0 , 0 , 0 , 0.2 );
+}
+botón : desplazarse { cursor : puntero; }
+botón : foco { contorno : ninguno; }
+
+pie de página {
+  alineación de texto : centro;
+  color :  # ddd ;
+  font-weight : normal;
+  sombra de texto :  0 px  -1 px  0 px  rgba ( 0 ,  0 ,  0 ,  0.2 );
+  tamaño de fuente :  0,8 em ;
+  relleno :  20 px ;
+}
+
+pie de página  a ,
+pie de página  a : enlace {
+  color :  # fff ;
+  decoración de texto : ninguna;
+}
+    </ estilo >
+</ cabeza >
+< cuerpo >
+    < div  class = "" >
+        < div  id = " calendari " > </ div >
+      </ div >
+      < guión >
+        var  mesos  =  [
+    'Enero' ,
+    'Febrero' ,
+    'Marzo' ,
+    'Abril' ,
+    'Mayo' ,
+    'Junio' ,
+    'Julio' ,
+    'Agosto' ,
+    'Septiembre' ,
+    'Octubre' ,
+    'Noviembre' ,
     'Desember'
-];
+] ;
 
-var dies = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wedensday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-];
+var  dies  =  [
+    'Domingo' ,
+    'Lunes' ,
+    'Martes' ,
+    'Miercoles' ,
+    'Jueves' ,
+    'Viernes' ,
+    'Sábado'
+] ;
 
-var dies_abr = [
-    'Su',
-    'Mo',
-    'Tu',
-    'We',
-    'Th',
-    'Fr',
+var  dies_abr  =  [
+    'DO' ,
+    'Lu' ,
+    'Ma' ,
+    'Mi' ,
+    'Ju' ,
+    'Vi' ,
     'Sa'
-];
+] ;
 
-Number.prototype.pad = function(num) {
-    var str = '';
-    for(var i = 0; i < (num-this.toString().length); i++)
-        str += '0';
-    return str += this.toString();
+Número . prototipo . pad  =  función ( num )  {
+    var  str  =  '' ;
+    para ( var  i  =  0 ;  i  <  ( num - this . toString ( ) . length ) ;  i ++ )
+        str  + =  '0' ;
+    devuelve  str  + =  esto . toString ( ) ;
 }
 
-function calendari(widget, data)
+función  calendari ( widget ,  datos )
 {
 
-    var original = widget.getElementsByClassName('actiu')[0];
+    var  original  =  widget . getElementsByClassName ( 'actiu' ) [ 0 ] ;
 
-    if(typeof original === 'undefined')
+    si ( typeof  originales  ===  'definido' )
     {
-        original = document.createElement('table');
-        original.setAttribute('data-actual',
-			      data.getFullYear() + '/' +
-			      data.getMonth().pad(2) + '/' +
-			      data.getDate().pad(2))
-        widget.appendChild(original);
+        original  =  documento . createElement ( 'tabla' ) ;
+        original . setAttribute ( 'datos-actual' ,
+			      datos . getFullYear ( )  +  '/'  +
+			      datos . getMonth ( ) . pad ( 2 )  +  '/'  +
+			      datos . getDate ( ) . almohadilla ( 2 ) )
+        widget . appendChild ( original ) ;
     }
 
-    var diff = data - new Date(original.getAttribute('data-actual'));
+    var  diff  =  data  -  nueva  fecha ( original . getAttribute ( 'data-actual' ) ) ;
 
-    diff = new Date(diff).getMonth();
+    diff  =  nueva  fecha ( diff ) . getMonth ( ) ;
 
-    var e = document.createElement('table');
+    var  e  =  documento . createElement ( 'tabla' ) ;
 
-    e.className = diff  === 0 ? 'amagat-esquerra' : 'amagat-dreta';
-    e.innerHTML = '';
+    e . className  =  diff   ===  0 ? 'amagat-esquerra' : 'amagat-dreta' ;
+    e . innerHTML  =  '' ;
 
-    widget.appendChild(e);
+    widget . appendChild ( e ) ;
 
-    e.setAttribute('data-actual',
-                   data.getFullYear() + '/' +
-                   data.getMonth().pad(2) + '/' +
-                   data.getDate().pad(2))
+    e . setAttribute ( 'datos-actual' ,
+                   datos . getFullYear ( )  +  '/'  +
+                   datos . getMonth ( ) . pad ( 2 )  +  '/'  +
+                   datos . getDate ( ) . almohadilla ( 2 ) )
 
-    var fila = document.createElement('tr');
-    var titol = document.createElement('th');
-    titol.setAttribute('colspan', 7);
+    var  fila  =  documento . createElement ( 'tr' ) ;
+    var  titol  =  documento . createElement ( 'th' ) ;
+    titol . setAttribute ( 'colspan' ,  7 ) ;
 
-    var boto_prev = document.createElement('button');
-    boto_prev.className = 'boto-prev';
-    boto_prev.innerHTML = '&#9666;';
+    var  boto_prev  =  documento . createElement ( 'botón' ) ;
+    boto_prev . className  =  'boto-prev' ;
+    boto_prev . innerHTML  =  '& # 9666;' ;
 
-    var boto_next = document.createElement('button');
-    boto_next.className = 'boto-next';
-    boto_next.innerHTML = '&#9656;';
+    var  boto_next  =  documento . createElement ( 'botón' ) ;
+    boto_next . className  =  'boto-siguiente' ;
+    boto_next . innerHTML  =  '& # 9656;' ;
 
-    titol.appendChild(boto_prev);
-    titol.appendChild(document.createElement('span')).innerHTML = 
-        mesos[data.getMonth()] + '<span class="any">' + data.getFullYear() + '</span>';
+    titol . appendChild ( boto_prev ) ;
+    titol . appendChild ( document . createElement ( 'intervalo' ) ) . innerHTML  = 
+        mesos [ data . getMonth ( ) ]  +  '<span class = "any">'  +  datos . getFullYear ( )  +  '</span>' ;
 
-    titol.appendChild(boto_next);
+    titol . appendChild ( boto_next ) ;
 
-    boto_prev.onclick = function() {
-        data.setMonth(data.getMonth() - 1);
-        calendari(widget, data);
-    };
+    boto_prev . onclick  =  function ( )  {
+        datos . setMonth ( datos . getMonth ( )  -  1 ) ;
+        calendari ( widget ,  datos ) ;
+    } ;
 
-    boto_next.onclick = function() {
-        data.setMonth(data.getMonth() + 1);
-        calendari(widget, data);
-    };
+    boto_next . onclick  =  function ( )  {
+        datos . setMonth ( datos . getMonth ( )  +  1 ) ;
+        calendari ( widget ,  datos ) ;
+    } ;
 
-    fila.appendChild(titol);
-    e.appendChild(fila);
+    fila . appendChild ( título ) ;
+    e . appendChild ( fila ) ;
 
-    fila = document.createElement('tr');
+    fila  =  documento . createElement ( 'tr' ) ;
 
-    for(var i = 1; i < 7; i++)
+    para ( var  i  =  1 ;  i  <  7 ;  i ++ )
     {
-        fila.innerHTML += '<th>' + dies_abr[i] + '</th>';
+        fila . innerHTML  + =  '<th>'  +  dies_abr [ i ]  +  '</th>' ;
     }
 
-    fila.innerHTML += '<th>' + dies_abr[0] + '</th>';
-    e.appendChild(fila);
+    fila . innerHTML  + =  '<th>'  +  dies_abr [ 0 ]  +  '</th>' ;
+    e . appendChild ( fila ) ;
 
-    /* Obtinc el dia que va acabar el mes anterior */
-    var inici_mes =
-        new Date(data.getFullYear(), data.getMonth(), -1).getDay();
+    / * Obtinc el dia que va acabar el mes anterior * /
+    var  inici_mes  =
+        nueva  Fecha ( datos . getFullYear ( ) ,  datos . getMonth ( ) ,  - 1 ) . getDay ( ) ;
 
-    var actual = new Date(data.getFullYear(),
-			  data.getMonth(),
-			  -inici_mes);
+    var  actual  =  nueva  fecha ( datos . getFullYear ( ) ,
+			  datos . getMonth ( ) ,
+			  - inici_mes ) ;
 
-    /* 6 setmanes per cobrir totes les posiblitats
-     *  Quedaria mes consistent alhora de mostrar molts mesos 
-     *  en una quadricula */
-    for(var s = 0; s < 6; s++)
+    / * 6 setmanes por cobrir totes les posiblitats
+     * Quedaria mes consistente alhora de mostrar mudas mesos 
+     * en una quadricula * /
+    para ( var  s  =  0 ;  s  <  6 ;  s ++ )
     {
-        var fila = document.createElement('tr');
+        var  fila  =  documento . createElement ( 'tr' ) ;
 
-        for(var d = 1; d < 8; d++)
+        para ( var  d  =  1 ;  d  <  8 ;  d ++ )
         {
-	    var cela = document.createElement('td');
-	    var span = document.createElement('span');
+	    var  cela  =  documento . createElement ( 'td' ) ;
+	    var  span  =  documento . createElement ( 'intervalo' ) ;
 
-	    cela.appendChild(span);
+	    cela . appendChild ( intervalo ) ;
 
-            span.innerHTML = actual.getDate();
+            lapso . innerHTML  =  actual . getDate ( ) ;
 
-            if(actual.getMonth() !== data.getMonth())
-                cela.className = 'fora';
+            if ( actual . getMonth ( )  ! ==  data . getMonth ( ) )
+                cela . className  =  'foros' ;
 
-            /* Si es avui el decorem */
-            if(data.getDate() == actual.getDate() &&
-	       data.getMonth() == actual.getMonth())
-		cela.className = 'avui';
+            / * Si es avui el decorem * /
+            if ( data . getDate ( )  ==  actual . getDate ( )  &&
+	       datos . getMonth ( )  ==  actual . getMonth ( ) )
+		cela . className  =  'avui' ;
 
-	    actual.setDate(actual.getDate()+1);
-            fila.appendChild(cela);
+	    actual . setDate ( actual . getDate ( ) + 1 ) ;
+            fila . appendChild ( cela ) ;
         }
 
-        e.appendChild(fila);
+        e . appendChild ( fila ) ;
     }
 
-    setTimeout(function() {
-        e.className = 'actiu';
-        original.className +=
-        diff === 0 ? ' amagat-dreta' : ' amagat-esquerra';
-    }, 20);
+    setTimeout ( function ( )  {
+        e . className  =  'actiu' ;
+        original . className  + =
+        diff  ===  0 ? 'amagat-dreta' : 'amagat-esquerra' ;
+    } ,  20 ) ;
 
-    original.className = 'inactiu';
+    original . className  =  'inactiu' ;
 
-    setTimeout(function() {
-        var inactius = document.getElementsByClassName('inactiu');
-        for(var i = 0; i < inactius.length; i++)
-            widget.removeChild(inactius[i]);
-    }, 1000);
+    setTimeout ( function ( )  {
+        var  inactius  =  documento . getElementsByClassName ( 'inactiu' ) ;
+        para ( var  i  =  0 ;  i  <  inactius . length ;  i ++ )
+            widget . removeChild ( inactius [ i ] ) ;
+    } ,  1000 ) ;
 
 }
 
-calendari(document.getElementById('calendari'), new Date());
+calendari ( documento . getElementById ( 'calendari' ) ,  nueva  fecha ( ) ) ;
 
-    </script>
-</body>
-</html>
+    </ script >
+</ cuerpo >
+</ html >
+© 2021 GitHub, Inc.
+Condiciones
+Intimidad
+Seguridad
+Estado
+Docs
+Póngase en contacto con GitHub
+Precios
+API
+Capacitación
+Blog
+Acerca de
